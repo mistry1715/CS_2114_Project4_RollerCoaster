@@ -80,9 +80,9 @@ public class WaitingParty extends AList<Person> implements Iterable<Person> {
         }
         else {
             for (int i = 0; i < super.getLength(); i++) {
-                if (super.getEntry(i).toString() == person.toString()) {
+                if (super.getEntry(i).getName() == person.getName()
+                        && super.getEntry(i).getHeight() == person.getHeight()) {
                     super.remove(i);
-
                     return true;
                 }
             }
@@ -141,6 +141,23 @@ public class WaitingParty extends AList<Person> implements Iterable<Person> {
     @Override
     public Iterator<Person> iterator() {
         return new WaitingPartyIterator();
+    }
+
+    /**
+     * Get a clone of the WaitingParty
+     * 
+     * @return clone
+     */
+    @Override
+    public WaitingParty clone() {
+        WaitingParty clone = new WaitingParty(this.willSplit());
+        Iterator<Person> iterator = this.iterator();
+
+        while (iterator.hasNext()) {
+            clone.add(iterator.next());
+        }
+
+        return clone;
     }
 
     /**

@@ -76,7 +76,7 @@ public class WaitingPartyTest {
     @Test
     public void testRemovePerson() {
         assertFalse(listNull.removePerson(new Person("Junjie", 183)));
-        assertFalse(list.removePerson(new Person("Junjie", 183)));
+        assertTrue(list.removePerson(new Person("Junjie", 183)));
         assertFalse(list.removePerson(new Person("Xinchen", 170)));
     }
 
