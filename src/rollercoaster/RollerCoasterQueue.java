@@ -132,13 +132,13 @@ public class RollerCoasterQueue {
      * @return A valid WaitingParty
      */
     public WaitingParty dequeueParty(int seatsAvailable) {
-        if (queue == null) {
+        if (queue.isEmpty()) {
             return null;
         }
         else {
             WaitingParty party = getFront();
 
-            if (party.getLength() > seatsAvailable) {
+            if (party.getLength() <= seatsAvailable) {
                 return party;
             }
             else {
@@ -168,7 +168,7 @@ public class RollerCoasterQueue {
      */
     public String toString() {
         return "Line with minimum height " + MIN_PERSON_HEIGHT + " cm.\n"
-                + super.toString();
+                + queue.toString();
     }
 
     /**
