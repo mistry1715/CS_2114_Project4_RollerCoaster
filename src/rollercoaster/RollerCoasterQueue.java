@@ -206,15 +206,18 @@ public class RollerCoasterQueue {
         }
         else {
             Object[] items = this.toArray(); 
-            Object[] otherItems = ((WaitingParty)other).toArray();
-            ComparePersonHeight comparer = new ComparePersonHeight();
-            Arrays.sort(items, comparer);
-            Arrays.sort(otherItems, comparer);
+            Object[] otherItems = ((RollerCoasterQueue)other).toArray();
 
             if (items.length != otherItems.length) {
                 return false;
             }
             else {
+                for (int i = 0; i < items.length; i ++) {
+                    if (!items[i].equals(otherItems[i])) {
+                        return false;
+                    }
+                }
+
                 for (int i = 0; i < items.length; i++) {
                     if (!Arrays.equals(items, otherItems)) {
                         return false;

@@ -125,4 +125,13 @@ public class WaitingPartyTest {
         assertNotNull(ex);
     }
 
+    /**
+     * Test clone
+     */
+    @Test
+    public void testClone() {
+        WaitingParty clone = list.clone();
+        assertTrue(list.equals(clone));
+    }
+
 }
