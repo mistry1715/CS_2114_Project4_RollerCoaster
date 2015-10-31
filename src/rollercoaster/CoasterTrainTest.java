@@ -6,9 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CoasterTrainTest {
+    
+    private CoasterTrain train;
 
     @Before
     public void setUp() throws Exception {
+        train = new CoasterTrain();
     }
 
     @Test
