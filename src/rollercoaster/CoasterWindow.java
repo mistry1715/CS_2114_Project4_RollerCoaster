@@ -55,6 +55,8 @@ public class CoasterWindow {
             else {
                 tempCircle.setBackgroundColor(Color.RED);
             }
+            
+            partyCircles.add(tempCircle);
         }
         
         // Button  
@@ -68,12 +70,19 @@ public class CoasterWindow {
        
         // TextShape
         coasterStatus = addTextShape("Coaster Status", 50, 50);
-        window.addShape(coasterStatus);
+        queueStatus = addTextShape("Queues Status:(Green:Willing to split)"
+                + "(Red:Not willing to split)", 0, 0);
+        errorM = addTextShape("Ride closed", 0, 0);
+        errorM.setBackgroundColor(Color.YELLOW);
+        coasterCount = addTextShape("Available Seats:", 0, 0);
+        queueFront = addTextShape("Perons in the first Waiting party:", 0, 0);
         
-    }
-    
-    private TextShape addTextShape(String str, int x, int y) {
-        return new TextShape(x, y, str);
+        window.addShape(coasterStatus);
+        window.addShape(queueStatus);
+        window.addShape(errorM);
+        window.addShape(coasterCount);
+        window.addShape(queueFront);
+        
     }
     
     public void clickedSendTrain(Button b) {
@@ -103,6 +112,10 @@ public class CoasterWindow {
         if (queue.isEmpty()) {
             b.disable();
         }
+    }
+
+    private TextShape addTextShape(String str, int x, int y) {
+        return new TextShape(x, y, str);
     }
 
     private void updateCoaster() {
