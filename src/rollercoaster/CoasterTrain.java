@@ -66,10 +66,10 @@ public class CoasterTrain {
     public String toString() {
         String str = "";
 
-        for (int i = 0; i < getOpenSeats(); i++) {
-            str += seat[i] + "";
+        for (int i = 0; i < firstAvail; i++) {
+            str += seat[i].toString();
 
-            if (getOpenSeats() - i > 1) {
+            if (firstAvail - i > 1) {
                 str += " ";
             }
         }
@@ -90,8 +90,8 @@ public class CoasterTrain {
         else {
             int j = 0;
 
-            for (int i = firstAvail; i < party.getLength(); i++) {
-                seat[i] = party.getEntry(j++);
+            for (; firstAvail < party.getLength(); firstAvail++) {
+                seat[firstAvail] = party.getEntry(j++);
             }
         }
     }
@@ -113,13 +113,7 @@ public class CoasterTrain {
             return false;
         }
         else {
-            for (int i = 0; i < SEATS; i++) {
-                if (seat[i].equals(((CoasterTrain)other).toArray()[i])) {
-                    return false;
-                }
-            }
-
-            return true;
+            return this.toString().equals(((CoasterTrain)other).toString());
         }
     }
 
