@@ -1,0 +1,14 @@
+true
+Billy J. Thornton, 176,Bob E. Evans, 172,Joe Cocker, 80
+false
+Susy Q., 155, Frankie B., 160
+true 
+kid1, 100, kid2, 101, kid3, 102
+true
+mom, 150, dad, 160, bro1, 130, bro2, 140, bro3, 85, sis1, 100, sis2, 140
+true
+Marty Friedman, 150,  Big daddy, 160, Gbro1, 130, Gbro2, 140, bro3, 85, sis1, 100, sis2, 140
+false
+BB King, 150, dad, 160
+true
+Carlos Santana, 150, Rob Thomas, 190, Dennis Ritchie, 180

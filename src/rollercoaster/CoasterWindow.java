@@ -10,32 +10,70 @@ import CS2114.Window;
 import CS2114.WindowSide;
 import list.AList;
 
+/**
+ * This object is the front end. Here we build our window, 
+ * its buttons, and render the RollerCoasterQueue and 
+ * CoasterTrain on the window in a meaningful way.
+ * 
+ * @author Junjie Cheng (cjunjie)
+ * @version 2015.11.02
+ */
 public class CoasterWindow {
 
+    /**
+     * Window
+     */
     private Window window;
+
+    /**
+     * List
+     */
     private RollerCoasterQueue queue;
     private CoasterTrain train;
     private AList<CircleShape> partyCircles;
+
+    /**
+     * Button
+     */
     private Button seatParty;
     private Button sendTrain;
+
+    /**
+     * Shape of coaster
+     */
     private Shape coaster;
     private Shape coasterSeatsFilled;
+
+    /**
+     * Separator
+     */
     private Shape separator;
+
+    /**
+     * Final value
+     */
     public static final int TRAIN_HEIGHT = 50;
     public static final int QUEUE_STARTX = 100;
     public static final int QUEUE_STARTY = 150;
     public static final int DISPLAY_FACTOR = 10;
+
+    /**
+     * Text
+     */
     private TextShape coasterStatus;
     private TextShape queueStatus;
     private TextShape errorM;
     private TextShape coasterCount;
     private TextShape queueFront;
 
+    /**
+     * Constructor
+     * 
+     * @param queue A queue contains WaitingParty
+     */
     public CoasterWindow(RollerCoasterQueue queue) {
         this.queue = queue;
-
-        // Window
-        window = new Window("Roller Coaster Ride");
+        this.train = new CoasterTrain();
 
         // Add circle to the list
         partyCircles = new AList<CircleShape>();
@@ -59,15 +97,19 @@ public class CoasterWindow {
             partyCircles.add(tempCircle);
         }
 
-        // Button  
-        initSeatPartyButtonStatus();
-        initSendTrainButtonStatus();
+        // Window
+        window = new Window("Roller Coaster Ride");
 
         // Separator
         separator = new Shape(2, (int) (window.getGraphPanelHeight() * 0.8));
+        separator.setBackgroundColor(Color.BLACK);
         separator.setX(window.getGraphPanelWidth() / 5);
         separator.setY(window.getGraphPanelHeight() / 10);
         window.addShape(separator);
+
+        // Button  
+        initSeatPartyButtonStatus();
+        initSendTrainButtonStatus();
 
         // TextShape
         displayCoasterCount();
@@ -85,6 +127,11 @@ public class CoasterWindow {
         updateQueue();
     }
 
+    /**
+     * Method for sendTrain Button
+     * 
+     * @param b Button
+     */
     public void clickedSendTrain(Button b) {
         train.clear();
         updateCoaster();
@@ -97,6 +144,11 @@ public class CoasterWindow {
         }
     }
 
+    /**
+     * Method for seatParty Button
+     * 
+     * @param b Button
+     */
     public void clickedSeatParty(Button b) {
         WaitingParty party = queue.dequeueParty(train.getOpenSeats());
 
@@ -114,10 +166,21 @@ public class CoasterWindow {
         }
     }
 
+    /**
+     * Return a TextShape
+     * 
+     * @param str String
+     * @param x X coordinate
+     * @param y Y coordinate
+     * @return TextShape
+     */
     private TextShape addTextShape(String str, int x, int y) {
         return new TextShape(x, y, str);
     }
 
+    /**
+     * Update coaster
+     */
     private void updateCoaster() {
         coasterSeatsFilled = new Shape(10, 
                 (int) (2.5 * (CoasterTrain.SEATS - train.getOpenSeats())));
@@ -131,11 +194,17 @@ public class CoasterWindow {
         updateTextShapes();
     }
 
+    /**
+     * Update queue
+     */
     private void updateQueue() {
         updateCircles();    
         updateTextShapes();
     }
 
+    /**
+     * End ride
+     */
     private void endRide() {
         errorM = addTextShape("Ride closed",
                 (window.getGraphPanelWidth() - separator.getY() - errorM.getWidth()) / 2,
@@ -147,6 +216,9 @@ public class CoasterWindow {
         sendTrain.disable();
     }
 
+    /**
+     * Draw circles in the list
+     */
     private void drawCircles() {
         int x = QUEUE_STARTX;
         int y = QUEUE_STARTY;
@@ -162,10 +234,16 @@ public class CoasterWindow {
         window.repaint();
     }
 
+    /**
+     * Update Circles
+     */
     private void updateCircles() {
         drawCircles();
     }
 
+    /**
+     * Update TextShapes
+     */
     private void updateTextShapes() {
         updateFirstParty(queue.getFront().getLength());
 
@@ -174,6 +252,10 @@ public class CoasterWindow {
         window.repaint();
     }
 
+    /**
+     * Update first party in the queue
+     * @param n Number of person in the first Waiting party
+     */
     private void updateFirstParty(int n) {
         queueFront = addTextShape("Perons in the first Waiting party:" + n, 
                 separator.getX() + 20,
@@ -183,6 +265,9 @@ public class CoasterWindow {
         window.repaint();
     }
 
+    /**
+     * Initialize seatParty Button
+     */
     private void initSeatPartyButtonStatus() {
         seatParty = new Button("Seat Party");
         window.addButton(seatParty, WindowSide.SOUTH);
@@ -190,6 +275,9 @@ public class CoasterWindow {
         seatParty.enable();
     }
 
+    /**
+     * Initialize sendTrain Button
+     */
     private void initSendTrainButtonStatus() {
         sendTrain = new Button("Send Train");
         window.addButton(sendTrain, WindowSide.SOUTH);
@@ -197,20 +285,26 @@ public class CoasterWindow {
         sendTrain.enable();
     }
 
+    /**
+     * Display coaster count
+     */
     private void displayCoasterCount() {
-        coasterCount = addTextShape("Available Seats:" + train.getOpenSeats(), 
-                (separator.getX() - coasterStatus.getWidth()) / 2, 
-                (int) (window.getGraphPanelHeight() * 0.9 - coasterCount.getHeight()));
-        window.addShape(coasterCount);
-
-        coasterStatus = addTextShape("Coaster Status", 50, 50);
+        coasterStatus = addTextShape("Coaster Status", 0, 00);
         coasterStatus.setX((separator.getX() - coasterStatus.getWidth()) / 2);
         coasterStatus.setY(separator.getY());
         window.addShape(coasterStatus);
 
+        coasterCount = addTextShape("Available Seats:" + 20, 0, 0);
+        coasterCount.setX((separator.getX() - coasterStatus.getWidth()) / 2);
+        coasterCount.setY((int) (window.getGraphPanelHeight() * 0.9 - coasterCount.getHeight()));
+        window.addShape(coasterCount);
+
         window.repaint();
     }
 
+    /**
+     * Display queue front
+     */
     private void displayQueueFront() {
         queueFront = addTextShape("Perons in the first Waiting party:" + queue.getFront().getLength(), 
                 separator.getX() + 20,
