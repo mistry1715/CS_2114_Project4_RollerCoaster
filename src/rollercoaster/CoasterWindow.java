@@ -52,7 +52,7 @@ public class CoasterWindow {
     /**
      * Final value
      */
-    public static final int TRAIN_HEIGHT = 50;
+    public static final int TRAIN_HEIGHT = 200;
     public static final int QUEUE_STARTX = 100;
     public static final int QUEUE_STARTY = 150;
     public static final int DISPLAY_FACTOR = 10;
@@ -101,10 +101,9 @@ public class CoasterWindow {
         window = new Window("Roller Coaster Ride");
 
         // Separator
-        separator = new Shape(2, (int) (window.getGraphPanelHeight() * 0.8));
-        separator.setBackgroundColor(Color.BLACK);
-        separator.setX(window.getGraphPanelWidth() / 5);
-        separator.setY(window.getGraphPanelHeight() / 10);
+        separator = new Shape(0, 0, 2, (int) (window.getGraphPanelHeight() * 0.8), Color.BLACK);
+        separator.setX((int) (window.getGraphPanelWidth() * 0.25));
+        separator.setY((int) (window.getGraphPanelHeight() * 0.1 - 10));
         window.addShape(separator);
 
         // Button  
@@ -116,11 +115,12 @@ public class CoasterWindow {
         displayQueueFront();
 
         // Coaster
-        coaster = new Shape(10, TRAIN_HEIGHT);
+        coaster = new Shape(0, 0, 40, TRAIN_HEIGHT, Color.WHITE);
+        coaster.setForegroundColor(Color.BLACK);
+        coaster.setX((separator.getX() - coaster.getWidth()) / 2);
+        coaster.setY((window.getGraphPanelHeight() - TRAIN_HEIGHT) / 2);
         window.addShape(coaster);
-        coaster.setX((separator.getX()/2) - 5);
-        coaster.setY((window.getGraphPanelHeight() - TRAIN_HEIGHT)/2);
-
+        
         updateCoaster();
 
         // Queue
@@ -175,7 +175,10 @@ public class CoasterWindow {
      * @return TextShape
      */
     private TextShape addTextShape(String str, int x, int y) {
-        return new TextShape(x, y, str);
+        TextShape text = new TextShape(x, y, str);
+        text.setBackgroundColor(Color.WHITE);
+        
+        return text;
     }
 
     /**
@@ -289,13 +292,13 @@ public class CoasterWindow {
      * Display coaster count
      */
     private void displayCoasterCount() {
-        coasterStatus = addTextShape("Coaster Status", 0, 00);
+        coasterStatus = addTextShape("Coaster Status", 0, 0);
         coasterStatus.setX((separator.getX() - coasterStatus.getWidth()) / 2);
         coasterStatus.setY(separator.getY());
         window.addShape(coasterStatus);
 
         coasterCount = addTextShape("Available Seats:" + 20, 0, 0);
-        coasterCount.setX((separator.getX() - coasterStatus.getWidth()) / 2);
+        coasterCount.setX((separator.getX() - coasterCount.getWidth()) / 2);
         coasterCount.setY((int) (window.getGraphPanelHeight() * 0.9 - coasterCount.getHeight()));
         window.addShape(coasterCount);
 
