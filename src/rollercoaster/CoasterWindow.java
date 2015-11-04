@@ -53,7 +53,7 @@ public class CoasterWindow {
      * Final value
      */
     public static final int TRAIN_HEIGHT = 200;
-    public static final int QUEUE_STARTX = 100;
+    public static final int QUEUE_STARTX = 200;
     public static final int QUEUE_STARTY = 150;
     public static final int DISPLAY_FACTOR = 10;
 
@@ -75,28 +75,6 @@ public class CoasterWindow {
         this.queue = queue;
         this.train = new CoasterTrain();
 
-        // Add circle to the list
-        partyCircles = new AList<CircleShape>();
-        WaitingParty[] parties = new WaitingParty[queue.toArray().length];
-
-        for (int i = 0; i < parties.length; i++) {
-            parties[i] = (WaitingParty) queue.toArray()[i];
-        }
-
-        for (int i = 0; i < parties.length; i++) {
-            CircleShape tempCircle = new CircleShape(parties[i].getLength() * DISPLAY_FACTOR,
-                    parties[i].getLength() * DISPLAY_FACTOR);
-
-            if (parties[i].willSplit) {
-                tempCircle.setBackgroundColor(Color.GREEN);
-            }
-            else {
-                tempCircle.setBackgroundColor(Color.RED);
-            }
-
-            partyCircles.add(tempCircle);
-        }
-
         // Window
         window = new Window("Roller Coaster Ride");
 
@@ -114,16 +92,7 @@ public class CoasterWindow {
         displayCoasterCount();
         displayQueueFront();
 
-        // Coaster
-        coaster = new Shape(0, 0, 40, TRAIN_HEIGHT, Color.WHITE);
-        coaster.setForegroundColor(Color.BLACK);
-        coaster.setX((separator.getX() - coaster.getWidth()) / 2);
-        coaster.setY((window.getGraphPanelHeight() - TRAIN_HEIGHT) / 2);
-        window.addShape(coaster);
-        
         updateCoaster();
-
-        // Queue
         updateQueue();
     }
 
@@ -177,7 +146,7 @@ public class CoasterWindow {
     private TextShape addTextShape(String str, int x, int y) {
         TextShape text = new TextShape(x, y, str);
         text.setBackgroundColor(Color.WHITE);
-        
+
         return text;
     }
 
@@ -220,6 +189,13 @@ public class CoasterWindow {
     }
 
     /**
+     * Update Circles
+     */
+    private void updateCircles() {
+        drawCircles();
+    }
+
+    /**
      * Draw circles in the list
      */
     private void drawCircles() {
@@ -230,18 +206,12 @@ public class CoasterWindow {
             CircleShape circle = partyCircles.getEntry(i);
             circle.setX(x);
             circle.setY(y - circle.getHeight() / 2);
+            window.addShape(circle);
 
             x += circle.getWidth() + 5;
         }
 
         window.repaint();
-    }
-
-    /**
-     * Update Circles
-     */
-    private void updateCircles() {
-        drawCircles();
     }
 
     /**
@@ -292,6 +262,13 @@ public class CoasterWindow {
      * Display coaster count
      */
     private void displayCoasterCount() {
+        // Coaster
+        coaster = new Shape(0, 0, 40, TRAIN_HEIGHT, Color.WHITE);
+        coaster.setForegroundColor(Color.BLACK);
+        coaster.setX((separator.getX() - coaster.getWidth()) / 2);
+        coaster.setY((window.getGraphPanelHeight() - TRAIN_HEIGHT) / 2);
+        window.addShape(coaster);
+
         coasterStatus = addTextShape("Coaster Status", 0, 0);
         coasterStatus.setX((separator.getX() - coasterStatus.getWidth()) / 2);
         coasterStatus.setY(separator.getY());
@@ -309,13 +286,36 @@ public class CoasterWindow {
      * Display queue front
      */
     private void displayQueueFront() {
+        // Add circle to the list
+        partyCircles = new AList<CircleShape>();
+        WaitingParty[] parties = new WaitingParty[queue.toArray().length];
+
+        for (int i = 0; i < parties.length; i++) {
+            parties[i] = (WaitingParty) queue.toArray()[i];
+        }
+
+        for (int i = 0; i < parties.length; i++) {
+            CircleShape tempCircle = new CircleShape(parties[i].getLength() * DISPLAY_FACTOR,
+                    parties[i].getLength() * DISPLAY_FACTOR);
+
+            if (parties[i].willSplit) {
+                tempCircle.setBackgroundColor(Color.GREEN);
+            }
+            else {
+                tempCircle.setBackgroundColor(Color.RED);
+            }
+
+            partyCircles.add(tempCircle);
+        }
+
+        // Text
         queueFront = addTextShape("Perons in the first Waiting party:" + queue.getFront().getLength(), 
                 separator.getX() + 20,
                 (int) (window.getGraphPanelHeight() * 0.9 - coasterCount.getHeight()));
         window.addShape(queueFront);
 
         queueStatus = addTextShape("Queues Status:(Green:Willing to split)"
-                + "(Red:Not willing to split)", 0, 0);
+                + "(Red:Not willing to split)", separator.getX() + 20, separator.getY());
         window.addShape(queueStatus);
 
         window.repaint();
