@@ -295,14 +295,13 @@ public class CoasterWindow {
         }
 
         for (int i = 0; i < parties.length; i++) {
-            CircleShape tempCircle = new CircleShape(parties[i].getLength() * DISPLAY_FACTOR,
-                    parties[i].getLength() * DISPLAY_FACTOR);
+            CircleShape tempCircle = new CircleShape(0, 0, parties[i].getLength() * DISPLAY_FACTOR);
 
             if (parties[i].willSplit) {
-                tempCircle.setBackgroundColor(Color.GREEN);
+                tempCircle.setForegroundColor(Color.GREEN);
             }
             else {
-                tempCircle.setBackgroundColor(Color.RED);
+                tempCircle.setForegroundColor(Color.RED);
             }
 
             partyCircles.add(tempCircle);
