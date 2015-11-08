@@ -139,7 +139,7 @@ public class RollerCoasterQueue {
             WaitingParty party = getFront();
 
             if (party.getLength() <= seatsAvailable) {
-                return party;
+                return queue.dequeue();
             }
             else {
                 if (party.willSplit()) {

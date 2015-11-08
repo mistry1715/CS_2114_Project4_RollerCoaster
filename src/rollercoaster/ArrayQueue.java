@@ -76,7 +76,7 @@ public class ArrayQueue<T> implements QueueInterface<T> {
             T temp = queue[dequeueIndex];
             queue[dequeueIndex] = null;
             size--;
-            incrementIndex(dequeueIndex);
+            dequeueIndex = incrementIndex(dequeueIndex);
 
             return temp;
         }
@@ -95,7 +95,7 @@ public class ArrayQueue<T> implements QueueInterface<T> {
 
         queue[enqueueIndex] = entry;
         size++;
-        incrementIndex(enqueueIndex);
+        enqueueIndex = incrementIndex(enqueueIndex);
     }
 
     /**
@@ -168,7 +168,7 @@ public class ArrayQueue<T> implements QueueInterface<T> {
 
         for (int i = 0; i < size; i++) {
             temp[i] = queue[index];
-            incrementIndex(index);
+            index = incrementIndex(index);
         }
 
         return temp;

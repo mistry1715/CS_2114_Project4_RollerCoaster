@@ -155,7 +155,7 @@ public class CoasterWindow {
      */
     private void updateCoaster() {
         coasterSeatsFilled = new Shape(10, 
-                (int) (2.5 * (CoasterTrain.SEATS - train.getOpenSeats())));
+                (int) (10 * (CoasterTrain.SEATS - train.getOpenSeats())));
         coasterSeatsFilled.setBackgroundColor(Color.YELLOW);
         coasterSeatsFilled.setX(coaster.getX());
         coasterSeatsFilled.setY((int) (coaster.getY() + train.getOpenSeats() * 2.5));
