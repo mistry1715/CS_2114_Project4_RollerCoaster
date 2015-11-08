@@ -53,6 +53,7 @@ public class CoasterWindow {
      * Final value
      */
     public static final int TRAIN_HEIGHT = 200;
+    public static final int TRAIN_WIDTH = 40;
     public static final int QUEUE_STARTX = 200;
     public static final int QUEUE_STARTY = 150;
     public static final int DISPLAY_FACTOR = 10;
@@ -179,14 +180,16 @@ public class CoasterWindow {
             window.removeShape(coasterSeatsFilled);
         } 
         
-        coasterSeatsFilled = new Shape(10, 
-                (int) (10 * (CoasterTrain.SEATS - train.getOpenSeats())));
-        coasterSeatsFilled.setBackgroundColor(Color.ORANGE);
+        coasterSeatsFilled = new Shape(coaster.getX(),
+                coaster.getY() + train.getOpenSeats()
+                        * (TRAIN_HEIGHT / CoasterTrain.SEATS),
+                TRAIN_WIDTH, (CoasterTrain.SEATS - train.getOpenSeats())
+                        * (TRAIN_HEIGHT / CoasterTrain.SEATS),
+                Color.ORANGE);
         coasterSeatsFilled.setForegroundColor(Color.BLACK);
-        coasterSeatsFilled.setX(coaster.getX());
-        coasterSeatsFilled.setY((int) (coaster.getY() + train.getOpenSeats() * 2.5));
+        window.addShape(coasterSeatsFilled);
         window.moveToFront(coasterSeatsFilled);
-
+        
         updateTextShapes();
         window.repaint();
     }
@@ -203,9 +206,9 @@ public class CoasterWindow {
      * End ride
      */
     private void endRide() {
-        errorM = addTextShape("Ride closed",
-                (window.getGraphPanelWidth() - separator.getY() - errorM.getWidth()) / 2,
-                (window.getGraphPanelHeight() - errorM.getHeight()) / 2);
+        errorM = addTextShape("Ride closed", 0, 0);
+        errorM.setX((window.getGraphPanelWidth() - separator.getY() - errorM.getWidth()) / 2);
+        errorM.setY((window.getGraphPanelHeight() - errorM.getHeight()) / 2);
         errorM.setBackgroundColor(Color.ORANGE);
         window.addShape(errorM);
 
