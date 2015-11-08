@@ -1,5 +1,7 @@
 package rollercoaster;
 
+import java.util.Iterator;
+
 /**
  * A CoasterTrain holds an array of Persons. It seats people into 
  * the array and keeps track of available seats.
@@ -88,8 +90,10 @@ public class CoasterTrain {
             throw new IllegalStateException();
         }
         else {
-            for (int j = 0; firstAvail < party.getLength(); firstAvail++) {
-                seat[firstAvail] = party.getEntry(j++);
+            Iterator<Person> iterator = party.iterator();
+
+            while (iterator.hasNext()) {
+                this.seat[firstAvail++] = iterator.next();
             }
         }
     }
