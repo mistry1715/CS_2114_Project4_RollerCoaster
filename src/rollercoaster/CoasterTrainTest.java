@@ -69,6 +69,9 @@ public class CoasterTrainTest {
     @Test
     public void testIsEmpty() {
         assertTrue(train.isEmpty());
+        
+        train.seatParty(party);
+        assertFalse(train.isEmpty());
     }
 
     /**

@@ -52,7 +52,8 @@ public class RollerCoasterQueue {
         if (!validParty(party)) {
             WaitingParty partyOfShorties = createShortiesParty(party);
             shortiesParties.add(partyOfShorties);                        
-            Iterator<Person> partyOfShortiesIterator = partyOfShorties.clone().iterator();
+            Iterator<Person> partyOfShortiesIterator = 
+                    partyOfShorties.clone().iterator();
 
             while (partyOfShortiesIterator.hasNext()) {
                 party.removePerson(partyOfShortiesIterator.next());
@@ -192,6 +193,7 @@ public class RollerCoasterQueue {
     /**
      * Check if this and other are equal
      * 
+     * @param other other Object to be compared
      * @return Return true if they are equal, else return false
      */
     public boolean equals(Object other) {
@@ -212,7 +214,7 @@ public class RollerCoasterQueue {
                 return false;
             }
             else {
-                for (int i = 0; i < items.length; i ++) {
+                for (int i = 0; i < items.length; i++) {
                     if (!items[i].equals(otherItems[i])) {
                         return false;
                     }

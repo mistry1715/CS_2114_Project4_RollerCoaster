@@ -186,7 +186,7 @@ public class ArrayQueue<T> implements QueueInterface<T> {
         for (int i = 0; i < array.length; i++) {
             temp += array[i];
             if (i < array.length - 1) {
-                temp += ",";
+                temp += ", ";
             }
         }
 
@@ -197,6 +197,7 @@ public class ArrayQueue<T> implements QueueInterface<T> {
     /**
      * Check if this and other are equal
      * 
+     * @param other The Object to be compared
      * @return Return true if they are equal, 
      *          else return false
      */

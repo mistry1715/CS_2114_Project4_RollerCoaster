@@ -17,8 +17,20 @@ public class ArrayQueueTest {
      * ArrayQueue for the test
      */
     ArrayQueue<String> queue;
+
+    /**
+     * ArrayQueue for the test
+     */
     ArrayQueue<String> queue2;
+
+    /**
+     * ArrayQueue for the test
+     */
     ArrayQueue<String> queue3;
+
+    /**
+     * ArrayQueue for the test
+     */
     ArrayQueue<String> queueNull;
 
     /**
@@ -73,7 +85,7 @@ public class ArrayQueueTest {
         Exception ex = null;
 
         for (int i = 0; i < 99; i++) {
-            queue.enqueue(""+ i);
+            queue.enqueue("" + i);
             assertEquals(queue.size(), i + 2);
         }
 
@@ -128,7 +140,8 @@ public class ArrayQueueTest {
      */
     @Test
     public void testToString() {
-        assertEquals(queue.toString(), "[1]");
+        queue.enqueue("2");
+        assertEquals(queue.toString(), "[1, 2]");
     }
 
     /**

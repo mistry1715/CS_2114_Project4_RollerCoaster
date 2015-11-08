@@ -88,9 +88,7 @@ public class CoasterTrain {
             throw new IllegalStateException();
         }
         else {
-            int j = 0;
-
-            for (; firstAvail < party.getLength(); firstAvail++) {
+            for (int j = 0; firstAvail < party.getLength(); firstAvail++) {
                 seat[firstAvail] = party.getEntry(j++);
             }
         }

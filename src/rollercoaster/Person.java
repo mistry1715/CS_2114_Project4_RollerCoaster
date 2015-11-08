@@ -1,7 +1,7 @@
 package rollercoaster;
 
 /**
- * These objects contain a string, for a person¡¯s name, 
+ * These objects contain a string, for a personï¿½ï¿½s name, 
  * and an int, for their height in centimeters.
  * 
  * @author Junjie Cheng (cjunjie)
@@ -10,9 +10,13 @@ package rollercoaster;
 public class Person {
 
     /**
-     * Variable for storing name and height
+     * Name
      */
     String name;
+    
+    /**
+     * Height
+     */
     int height;
 
     /**

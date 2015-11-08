@@ -192,6 +192,30 @@ public class CoasterWindow {
      * Update Circles
      */
     private void updateCircles() {
+        for (int i = 0; i < partyCircles.getLength(); i++) {
+            window.removeShape(partyCircles.getEntry(i));
+        }
+        
+        // Add circle to the list
+        partyCircles = new AList<CircleShape>();
+        WaitingParty[] parties = new WaitingParty[queue.toArray().length];
+
+        for (int i = 0; i < parties.length; i++) {
+            parties[i] = (WaitingParty) queue.toArray()[i];
+        }
+
+        for (int i = 0; i < parties.length; i++) {
+            CircleShape tempCircle = new CircleShape(0, 0, parties[i].getLength() * DISPLAY_FACTOR);
+
+            if (parties[i].willSplit) {
+                tempCircle.setForegroundColor(Color.GREEN);
+            }
+            else {
+                tempCircle.setForegroundColor(Color.RED);
+            }
+
+            partyCircles.add(tempCircle);
+        }
         drawCircles();
     }
 
