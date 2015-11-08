@@ -154,9 +154,11 @@ public class CoasterWindow {
      * Update coaster
      */
     private void updateCoaster() {
+        window.removeShape(coasterSeatsFilled);
         coasterSeatsFilled = new Shape(10, 
                 (int) (10 * (CoasterTrain.SEATS - train.getOpenSeats())));
         coasterSeatsFilled.setBackgroundColor(Color.YELLOW);
+        coasterSeatsFilled.setForegroundColor(Color.BLACK);
         coasterSeatsFilled.setX(coaster.getX());
         coasterSeatsFilled.setY((int) (coaster.getY() + train.getOpenSeats() * 2.5));
         window.moveToFront(coasterSeatsFilled);
@@ -292,6 +294,16 @@ public class CoasterWindow {
         coaster.setX((separator.getX() - coaster.getWidth()) / 2);
         coaster.setY((window.getGraphPanelHeight() - TRAIN_HEIGHT) / 2);
         window.addShape(coaster);
+        
+        coasterSeatsFilled = new Shape(10, 
+                (int) (10 * (CoasterTrain.SEATS - train.getOpenSeats())));
+        coasterSeatsFilled.setBackgroundColor(Color.YELLOW);
+        coasterSeatsFilled.setForegroundColor(Color.BLACK);
+        coasterSeatsFilled.setX(coaster.getX());
+        coasterSeatsFilled.setY((int) (coaster.getY() + train.getOpenSeats() * 2.5));
+        window.moveToFront(coasterSeatsFilled);
+
+        window.repaint();
 
         coasterStatus = addTextShape("Coaster Status", 0, 0);
         coasterStatus.setX((separator.getX() - coasterStatus.getWidth()) / 2);

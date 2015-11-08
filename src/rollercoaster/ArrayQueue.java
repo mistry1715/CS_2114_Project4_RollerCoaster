@@ -1,7 +1,5 @@
 package rollercoaster;
 
-import java.util.Arrays;
-
 import queue.QueueInterface;
 
 /**
@@ -212,13 +210,20 @@ public class ArrayQueue<T> implements QueueInterface<T> {
             return false;
         }
         else {
-            Object[] items = this.toArray(); 
-            @SuppressWarnings("rawtypes")
-            Object[] otherItems = ((ArrayQueue)other).toArray();
-            ComparePersonHeight comparer = new ComparePersonHeight();
-            Arrays.sort(items, comparer);
-            Arrays.sort(otherItems, comparer);
-            return Arrays.equals(items, otherItems);
+            @SuppressWarnings("unchecked")
+            ArrayQueue<T> otherQueue = (ArrayQueue<T>)other;
+
+            for (int i = 0; i < size(); i++) {
+                T thisEntry = this.queue[(dequeueIndex + i) % queue.length];
+                T otherEntry = 
+                        otherQueue.queue[(dequeueIndex + i) % queue.length];
+                
+                if (!thisEntry.equals(otherEntry)) {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

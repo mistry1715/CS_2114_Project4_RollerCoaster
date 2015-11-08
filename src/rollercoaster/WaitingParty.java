@@ -37,7 +37,7 @@ public class WaitingParty extends AList<Person> implements Iterable<Person> {
      * Check the size of the WaitingParty and return a valid size of 
      * WaitingParty
      * 
-     * @param maxSize
+     * @param maxSize Maximum size of the WaitingParty
      * @return Valid size of WaitingParty
      */
     public WaitingParty splitParty(int maxSize) {
@@ -81,7 +81,8 @@ public class WaitingParty extends AList<Person> implements Iterable<Person> {
         else {
             for (int i = 0; i < super.getLength(); i++) {
                 if (super.getEntry(i).getName() == person.getName()
-                        && super.getEntry(i).getHeight() == person.getHeight()) {
+                        && super.getEntry(i).getHeight() == 
+                        person.getHeight()) {
                     super.remove(i);
                     return true;
                 }
@@ -99,17 +100,18 @@ public class WaitingParty extends AList<Person> implements Iterable<Person> {
     public String toString() {
         if (willSplit) {
             return "Party of size " + super.getLength() 
-            + " will split.\n" + super.toString() + "\n";
+                + " will split.\n" + super.toString() + "\n";
         }
         else {
             return "Party of size " + super.getLength() 
-            + " will not split.\n" + super.toString() + "\n";
+                + " will not split.\n" + super.toString() + "\n";
         }
     }
 
     /**
      * Check if other and this is equal
      * 
+     * @param other The Object to be compared
      * @return Return true if they are equal, else return false
      */
     public boolean equals(Object other) {
