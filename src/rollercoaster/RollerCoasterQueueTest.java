@@ -79,8 +79,8 @@ public class RollerCoasterQueueTest {
     @Test
     public void testEnqueuePartyWillNotSplit() {
         queue.enqueueParty(party3);
-        assertEquals(queue.getFront().toString(), 
-                "Party of size 0 will not split.\n[]\n");
+        
+        assertTrue(queue.isEmpty());
     }
 
     /**
@@ -175,7 +175,7 @@ public class RollerCoasterQueueTest {
 
         queue.enqueueParty(party3);
         queue2.enqueueParty(party4);
-        assertFalse(queue.equals(queue2));
+        assertTrue(queue.equals(queue2));
     }
 
     /**
