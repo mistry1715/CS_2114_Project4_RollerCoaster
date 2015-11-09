@@ -1,5 +1,6 @@
 package rollercoaster;
 
+import queue.EmptyQueueException;
 import queue.QueueInterface;
 
 /**

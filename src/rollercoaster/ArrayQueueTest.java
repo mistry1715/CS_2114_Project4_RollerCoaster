@@ -7,6 +7,8 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
+import queue.EmptyQueueException;
+
 /**
  * Test ArrayQueue class
  * 
