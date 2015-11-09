@@ -12,12 +12,12 @@ public class Person {
     /**
      * Name
      */
-    String name;
-    
+    private String name;
+
     /**
      * Height
      */
-    int height;
+    private int height;
 
     /**
      * Constructor
@@ -77,7 +77,8 @@ public class Person {
             return false;
         }
         else {
-            return ((Person)other).getHeight() == this.getHeight();
+            return ((Person)other).getHeight() == this.getHeight()
+                    && ((Person)other).getName() == this.getName();
         }
     }
 }

@@ -173,7 +173,8 @@ public class RollerCoasterQueueTest {
         queue2.enqueueParty(party);
         assertTrue(queue.equals(queue2));
 
-        queue2.enqueueParty(party);
+        queue.enqueueParty(party3);
+        queue2.enqueueParty(party4);
         assertFalse(queue.equals(queue2));
     }
 

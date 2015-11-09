@@ -2,6 +2,8 @@ package rollercoaster;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,22 +18,7 @@ public class ArrayQueueTest {
     /**
      * ArrayQueue for the test
      */
-    ArrayQueue<String> queue;
-
-    /**
-     * ArrayQueue for the test
-     */
-    ArrayQueue<String> queue2;
-
-    /**
-     * ArrayQueue for the test
-     */
-    ArrayQueue<String> queue3;
-
-    /**
-     * ArrayQueue for the test
-     */
-    ArrayQueue<String> queueNull;
+    ArrayQueue<String> array;
 
     /**
      * Set up before the test
@@ -40,13 +27,8 @@ public class ArrayQueueTest {
      */
     @Before
     public void setUp() throws Exception {
-        queue = new ArrayQueue<String>();
-        queue2 = new ArrayQueue<String>();
-        queue3 = new ArrayQueue<String>();
-
-        queue.enqueue("1");
-        queue2.enqueue("2");
-        queue3.enqueue("1");     
+        array = new ArrayQueue<String>();   
+        array.enqueue("0");
     }
 
     /**
@@ -54,8 +36,15 @@ public class ArrayQueueTest {
      */
     @Test
     public void testClear() {
-        queue.clear();
-        assertEquals(queue.size(), 0);
+        array.clear();
+        assertEquals(0, array.size());
+
+        for (int i = 0; i < 5; i++) {
+            array.enqueue(i + "");
+        }
+
+        array.clear();
+        assertEquals(0, array.size());
     }
 
     /**
@@ -63,15 +52,20 @@ public class ArrayQueueTest {
      */
     @Test
     public void testDequeue() {
+        array.enqueue("1");
+        array.enqueue("2");
+
+        assertEquals("0", array.dequeue());
+        assertEquals("1", array.dequeue());
+        assertEquals("2", array.dequeue());
+
         Exception ex = null;
 
-        assertEquals(queue.dequeue(), "1");
-
         try {
-            queue.dequeue();
+            array.dequeue();
             fail("dequeue() is not throwing an exception when it should");
         }
-        catch (EmptyQueueException e) {
+        catch (Exception e) {
             ex = e;
         }
 
@@ -85,21 +79,30 @@ public class ArrayQueueTest {
      */
     @Test
     public void testEnqueue() {
-        Exception ex = null;
+        array.enqueue("1");
+        assertEquals(2, array.size());
 
-        for (int i = 0; i < 99; i++) {
-            queue.enqueue("" + i);
-            assertEquals(queue.size(), i + 2);
+        for (int i = 0; i < 9; i++) {
+            array.enqueue("" + i);
         }
 
+        assertEquals(11, array.size());
+
+        for (int i = 0; i < 89; i++) {
+            array.enqueue("" + i);
+        }
+
+        Exception ex = null;
+
         try {
-            queue.enqueue("101");
+            array.enqueue("1");
         }
         catch (Exception e) {
             ex = e;
         }
 
-        assertNotNull(ex);
+        assertTrue("enqueue() is throwing the wrong type of exceptions",
+                ex instanceof IllegalStateException);
     }
 
     /**
@@ -107,7 +110,9 @@ public class ArrayQueueTest {
      */
     @Test
     public void testGetFront() {
-        assertEquals(queue.getFront(), "1");
+        assertEquals("0", array.getFront());
+        array.dequeue();
+        assertNull(array.getFront());    
     }
 
     /**
@@ -115,10 +120,9 @@ public class ArrayQueueTest {
      */
     @Test
     public void testIsEmpty() {
-        assertFalse(queue.isEmpty());
-
-        queue.dequeue();
-        assertTrue(queue.isEmpty());
+        assertFalse(array.isEmpty());
+        array.clear();
+        assertTrue(array.isEmpty());
     }
 
     /**
@@ -126,7 +130,9 @@ public class ArrayQueueTest {
      */
     @Test
     public void testSize() {
-        assertEquals(queue.size(), 1);
+        assertEquals(1, array.size());
+        array.enqueue("1");
+        assertEquals(2, array.size());    
     }
 
     /**
@@ -134,8 +140,10 @@ public class ArrayQueueTest {
      */
     @Test
     public void testToArray() {
-        Object[] temp = queue.toArray();
-        assertEquals(temp[0], "1");
+        array.enqueue("1");
+        array.enqueue("2");
+        Object[] newArray = array.toArray();
+        assertEquals("[0, 1, 2]", Arrays.toString(newArray));
     }
 
     /**
@@ -143,8 +151,15 @@ public class ArrayQueueTest {
      */
     @Test
     public void testToString() {
-        queue.enqueue("2");
-        assertEquals(queue.toString(), "[1, 2]");
+        assertEquals("[0]", array.toString());
+
+        array.dequeue();
+        assertEquals("[]", array.toString());
+
+        array.enqueue("0");
+        array.enqueue("1");
+        array.enqueue("2");
+        assertEquals("[0, 1, 2]", array.toString());
     }
 
     /**
@@ -152,11 +167,41 @@ public class ArrayQueueTest {
      */
     @Test
     public void testEquals() {
-        assertFalse(queue.equals(queueNull));
-        assertTrue(queue.equals(queue));
-        assertFalse(queue.equals("1"));
-        assertFalse(queue.equals(queue2));
-        assertTrue(queue.equals(queue3));
+        assertTrue(array.equals(array));
+
+        ArrayQueue<String> arrayNull = null;
+        assertFalse(array.equals(arrayNull));
+
+        String arrayString = "";
+        assertFalse(array.equals(arrayString));
+
+        ArrayQueue<String> array2 = new ArrayQueue<String>();
+        array2.enqueue("1");
+        array2.enqueue("2");
+        assertFalse(array.equals(array2));
+
+        ArrayQueue<String> array3 = new ArrayQueue<String>();
+        array3.enqueue("1");
+        assertFalse(array.equals(array3));
+
+        ArrayQueue<String> array4 = new ArrayQueue<String>();
+        array4.enqueue("1");
+        array4.enqueue("0");
+        array.enqueue("1");
+        assertFalse(array.equals(array4));
+
+        ArrayQueue<String> array5 = new ArrayQueue<String>();
+        array5.enqueue("0");
+        assertFalse(array.equals(array5));
+
+        array.clear();
+
+        array.enqueue("0");
+        array.enqueue("1");
+        ArrayQueue<String> array6 = new ArrayQueue<String>();
+        array6.enqueue("0");
+        array6.enqueue("1");
+        assertTrue(array.equals(array6));
     }
 
 }

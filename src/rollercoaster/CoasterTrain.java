@@ -14,7 +14,7 @@ public class CoasterTrain {
     /**
      * Array of Person
      */
-    private Person[] seat;
+    private Person[] seats;
 
     /**
      * Fist available position
@@ -30,7 +30,7 @@ public class CoasterTrain {
      * Constructor
      */
     public CoasterTrain() {
-        seat = new Person[SEATS];
+        seats = new Person[SEATS];
         firstAvail = 0;
     }
 
@@ -47,7 +47,7 @@ public class CoasterTrain {
      * Clear
      */
     public void clear() {
-        seat = new Person[SEATS];
+        seats = new Person[SEATS];
         firstAvail = 0;
     }
 
@@ -69,7 +69,7 @@ public class CoasterTrain {
         String str = "";
 
         for (int i = 0; i < firstAvail; i++) {
-            str += seat[i].toString();
+            str += seats[i].toString();
 
             if (firstAvail - i > 1) {
                 str += " ";
@@ -93,7 +93,7 @@ public class CoasterTrain {
             Iterator<Person> iterator = party.iterator();
 
             while (iterator.hasNext()) {
-                this.seat[firstAvail++] = iterator.next();
+                this.seats[firstAvail++] = iterator.next();
             }
         }
     }
@@ -125,6 +125,6 @@ public class CoasterTrain {
      * @return seat
      */
     public Person[] toArray() {
-        return seat;
+        return seats;
     }
 }

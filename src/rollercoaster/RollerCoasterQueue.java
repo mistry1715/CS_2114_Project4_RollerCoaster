@@ -1,6 +1,5 @@
 package rollercoaster;
 
-import java.util.Arrays;
 import java.util.Iterator;
 
 import list.AList;
@@ -59,6 +58,7 @@ public class RollerCoasterQueue {
                 party.removePerson(partyOfShortiesIterator.next());
             }
         }
+
         queue.enqueue(party);
     }
 
@@ -133,25 +133,24 @@ public class RollerCoasterQueue {
      * @return A valid WaitingParty
      */
     public WaitingParty dequeueParty(int seatsAvailable) {
-        if (queue.isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
+        else if (seatsAvailable >= this.getFront().getLength()) {
+            return queue.dequeue();
+        }
         else {
-            WaitingParty party = getFront();
-
-            if (party.getLength() <= seatsAvailable) {
-                return queue.dequeue();
+            if (validParty(getFront()))
+            {
+                return getFront().splitParty(seatsAvailable);
             }
-            else {
-                if (party.willSplit()) {
-                    return party.splitParty(seatsAvailable);
-                }
-                else {
-                    return null;
-                }
+            else
+            {
+                return null;
             }
         }
     }
+
 
     /**
      * Get the minimum height
@@ -207,27 +206,9 @@ public class RollerCoasterQueue {
             return false;
         }
         else {
-            Object[] items = this.toArray(); 
-            Object[] otherItems = ((RollerCoasterQueue)other).toArray();
+            RollerCoasterQueue obj = (RollerCoasterQueue) other;
 
-            if (items.length != otherItems.length) {
-                return false;
-            }
-            else {
-                for (int i = 0; i < items.length; i++) {
-                    if (!items[i].equals(otherItems[i])) {
-                        return false;
-                    }
-                }
-
-                for (int i = 0; i < items.length; i++) {
-                    if (!Arrays.equals(items, otherItems)) {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
+            return this.queue.equals(obj.queue);
         }
     }
 

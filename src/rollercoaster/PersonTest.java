@@ -17,9 +17,6 @@ public class PersonTest {
      * Instances of Person for the test
      */
     private Person person;
-    private Person personNull;
-    private Person personDifferent;
-    private Person personSame;
 
     /**
      * Set up before the test
@@ -29,9 +26,6 @@ public class PersonTest {
     @Before
     public void setUp() throws Exception {
         person = new Person("Junjie", 183);
-        personNull = null;
-        personDifferent = new Person("Yichen", 187);
-        personSame = new Person("Cheng", 183);
     }
 
     /**
@@ -63,10 +57,24 @@ public class PersonTest {
      */
     @Test
     public void testEquals() {
-        assertFalse(person.equals(personNull));
         assertTrue(person.equals(person));
-        assertFalse(person.equals("Junjie"));
+
+        Person personNull = null;
+        assertFalse(person.equals(personNull));
+
+        String personString = "";
+        assertFalse(person.equals(personString));
+
+        Person personName = new Person("YiChen", 183);
+        assertFalse(person.equals(personName));
+
+        Person personHeight = new Person("Junjie", 180);
+        assertFalse(person.equals(personHeight));
+
+        Person personDifferent = new Person("YiChen", 189);
         assertFalse(person.equals(personDifferent));
+
+        Person personSame = new Person("Junjie", 183);
         assertTrue(person.equals(personSame));
     }
 
