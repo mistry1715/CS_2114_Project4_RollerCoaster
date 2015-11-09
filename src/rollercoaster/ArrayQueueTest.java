@@ -114,7 +114,17 @@ public class ArrayQueueTest {
     public void testGetFront() {
         assertEquals("0", array.getFront());
         array.dequeue();
-        assertNull(array.getFront());    
+        Exception exception = null;
+        
+        try {
+            array.getFront();
+        }
+        catch (Exception e) {
+            exception = e;
+        }
+        
+        assertTrue("getFront() is throwing the wrong type of exceptions",
+                exception instanceof EmptyQueueException);
     }
 
     /**

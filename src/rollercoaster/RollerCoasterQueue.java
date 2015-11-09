@@ -1,7 +1,5 @@
 package rollercoaster;
 
-import java.util.Iterator;
-
 import list.AList;
 
 /**
@@ -48,18 +46,11 @@ public class RollerCoasterQueue {
      * @param party The WaitingParty to be pushed
      */
     public void enqueueParty(WaitingParty party) {
-        if (!validParty(party)) {
-            WaitingParty partyOfShorties = createShortiesParty(party);
-            shortiesParties.add(partyOfShorties);                        
-            Iterator<Person> partyOfShortiesIterator = 
-                    partyOfShorties.clone().iterator();
+        shortiesParties.add(createShortiesParty(party));
 
-            while (partyOfShortiesIterator.hasNext()) {
-                party.removePerson(partyOfShortiesIterator.next());
-            }
+        if (!party.isEmpty()) {
+            queue.enqueue(party);
         }
-
-        queue.enqueue(party);
     }
 
     /**
@@ -69,20 +60,22 @@ public class RollerCoasterQueue {
      * @return shortiesParty
      */
     private WaitingParty createShortiesParty(WaitingParty party) {
-        WaitingParty partyOfShorties = new WaitingParty(true);
-        Iterator<Person> iterator = party.iterator();
+        WaitingParty partyOfShorties = new WaitingParty(true); 
 
-        while (iterator.hasNext()) {
-            Person person = iterator.next();
+        int i = 0;
 
-            if (person.getHeight() < MIN_PERSON_HEIGHT) {
-                if (party.willSplit()) {
-                    partyOfShorties.add(person);
+        while (i < party.getLength()) {
+            if (party.getEntry(i).getHeight() < getMinimumHeight()) {
+                if (validParty(party)) {
+                    partyOfShorties.add(party.remove(i));
+                    i = 0;
                 }
                 else {
-                    return party;
+                    partyOfShorties = party;
+                    party.clear();
                 }
             }
+            i++;
         }
 
         return partyOfShorties;
@@ -95,17 +88,7 @@ public class RollerCoasterQueue {
      * @return Return true if it is valid, else return false
      */
     private boolean validParty(WaitingParty party) {
-        Iterator<Person> iterator = party.iterator();
-
-        while (iterator.hasNext()) {
-            Person person = iterator.next();
-
-            if (person.getHeight() < MIN_PERSON_HEIGHT) {
-                return false;
-            }
-        }
-
-        return true;
+        return party.willSplit();
     }
 
     /**
@@ -136,19 +119,22 @@ public class RollerCoasterQueue {
         if (isEmpty()) {
             return null;
         }
-        else if (seatsAvailable >= this.getFront().getLength()) {
-            return queue.dequeue();
+
+        WaitingParty party = queue.getFront();
+
+        if (seatsAvailable >= party.getLength()) {
+            queue.dequeue();
         }
         else {
-            if (validParty(getFront()))
-            {
-                return getFront().splitParty(seatsAvailable);
+            if (party.willSplit()) {
+                party = party.splitParty(seatsAvailable);
             }
-            else
-            {
+            else {
                 return null;
             }
         }
+
+        return party;
     }
 
 
@@ -177,7 +163,7 @@ public class RollerCoasterQueue {
      * @return Return true if it is empty, else return false
      */
     public boolean isEmpty() {
-        return queue.size() == 0;
+        return queue.isEmpty();
     }
 
     /**

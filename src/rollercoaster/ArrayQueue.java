@@ -102,7 +102,7 @@ public class ArrayQueue<T> implements QueueInterface<T> {
     @Override
     public T getFront() {
         if (isEmpty()) {
-            return null;
+            throw new EmptyQueueException();
         }
         else {
             return queue[dequeueIndex];
@@ -134,10 +134,8 @@ public class ArrayQueue<T> implements QueueInterface<T> {
      * Expand the capacity of the queue
      */
     private void ensureCapacity() {
-        if (dequeueIndex == ((enqueueIndex + 2) % queue.length))
-        {
-            if (queue.length + 9 <= MAX_CAPACITY)
-            {
+        if (dequeueIndex == ((enqueueIndex + 2) % queue.length)) {
+            if (queue.length + 9 <= MAX_CAPACITY) {
                 T[] oldQueue = queue;
                 int oldSize = oldQueue.length;
 
@@ -145,8 +143,7 @@ public class ArrayQueue<T> implements QueueInterface<T> {
                 T[] tempQueue = (T[]) new Object[10 + oldSize];
                 queue = tempQueue;
 
-                for (int index = 0; index < oldSize - 1; index++)
-                {
+                for (int index = 0; index < oldSize - 1; index++) {
                     queue[index] = oldQueue[dequeueIndex];
                     dequeueIndex = (dequeueIndex + 1) % oldSize;
                 }
@@ -154,8 +151,7 @@ public class ArrayQueue<T> implements QueueInterface<T> {
                 dequeueIndex = 0;
                 enqueueIndex = oldSize - 2;
             }
-            else
-            {
+            else {
                 throw new IllegalStateException();
             }
         }
@@ -231,7 +227,8 @@ public class ArrayQueue<T> implements QueueInterface<T> {
             for (int i = 0; i < size(); i++) {
                 T thisEntry = this.queue[(dequeueIndex + i) % queue.length];
                 T otherEntry = 
-                        otherQueue.queue[(dequeueIndex + i) % queue.length];
+                        otherQueue.queue[(otherQueue.dequeueIndex + i) 
+                                         % otherQueue.queue.length];
 
                 if (!thisEntry.equals(otherEntry)) {
                     return false;

@@ -51,9 +51,13 @@ public class WaitingParty extends AList<Person> implements Iterable<Person> {
             WaitingParty splitParty = new WaitingParty(true);
 
             for (int i = 0; i < maxSize; i++) {
-                splitParty.add(super.remove(0));
+                splitParty.add(this.getEntry(i));
             }
-
+            
+            for (int i = 0; i < splitParty.getLength(); i++) {
+                this.removePerson(splitParty.getEntry(i));
+            }
+            
             return splitParty;
         }
     }
@@ -80,10 +84,9 @@ public class WaitingParty extends AList<Person> implements Iterable<Person> {
         }
         else {
             for (int i = 0; i < super.getLength(); i++) {
-                if (super.getEntry(i).getName() == person.getName()
-                        && super.getEntry(i).getHeight() == 
-                        person.getHeight()) {
+                if (super.getEntry(i).equals(person)) {
                     super.remove(i);
+                    
                     return true;
                 }
             }
