@@ -22,6 +22,7 @@ public class WaitingPartyTest {
     private WaitingParty list2;
     private WaitingParty list3;
     private WaitingParty list4;
+    private WaitingParty listEmpty;
     private WaitingParty listNull;
 
     /**
@@ -47,8 +48,9 @@ public class WaitingPartyTest {
         list4 = new WaitingParty(true);
         list4.add(new Person("Junjie", 183));
         list4.add(new Person("Yichen", 187));
-
-        listNull = new WaitingParty(true);
+        
+        listEmpty = new WaitingParty(true);
+        listNull = null;
     }
 
     /**
@@ -75,9 +77,10 @@ public class WaitingPartyTest {
      */
     @Test
     public void testRemovePerson() {
-        assertFalse(listNull.removePerson(new Person("Junjie", 183)));
+        assertFalse(listEmpty.removePerson(new Person("Junjie", 183)));
         assertTrue(list.removePerson(new Person("Junjie", 183)));
         assertFalse(list.removePerson(new Person("Xinchen", 170)));
+        assertFalse(list.removePerson(new Person("Junjie", 170)));
     }
 
     /**
@@ -85,8 +88,11 @@ public class WaitingPartyTest {
      */
     @Test
     public void testToString() {
-        assertEquals(list2.toString(), "Party of size 2 will split.\n[Junjie 183cm, Yichen 187cm]\n");
-        assertEquals(list3.toString(), "Party of size 2 will not split.\n[Junjie 183cm, Yichen 187cm]\n");
+        assertEquals(list2.toString(), 
+                "Party of size 2 will split.\n[Junjie 183cm, Yichen 187cm]\n");
+        assertEquals(list3.toString(), 
+                "Party of size 2 will not split.\n" + ""
+                        + "[Junjie 183cm, Yichen 187cm]\n");
     }
 
     /**

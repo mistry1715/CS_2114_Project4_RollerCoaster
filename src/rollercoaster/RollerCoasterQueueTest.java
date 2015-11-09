@@ -89,7 +89,8 @@ public class RollerCoasterQueueTest {
     @Test
     public void testRejectedParties() {
         queue.enqueueParty(party2);
-        assertEquals(queue.rejectedParties().toString(), "[Party of size 1 will split.\n[2 50cm]\n]");
+        assertEquals(queue.rejectedParties().toString(), 
+                "[Party of size 1 will split.\n[2 50cm]\n]");
     }
 
     /**

@@ -69,12 +69,15 @@ public class ArrayQueueTest {
 
         try {
             queue.dequeue();
+            fail("dequeue() is not throwing an exception when it should");
         }
-        catch (Exception e) {
+        catch (EmptyQueueException e) {
             ex = e;
         }
 
         assertNotNull(ex);
+        assertTrue("dequeue() is throwing the wrong type of exceptions",
+                ex instanceof EmptyQueueException);
     }
 
     /**

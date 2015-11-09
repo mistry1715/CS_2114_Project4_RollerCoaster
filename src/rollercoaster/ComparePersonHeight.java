@@ -17,6 +17,7 @@ public class ComparePersonHeight implements Comparator<Object> {
      * Default constructor
      */
     public ComparePersonHeight() {
+        //this method does not need any code
     }
 
     /**
